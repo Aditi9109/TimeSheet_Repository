@@ -2,7 +2,7 @@ import openpyxl
 import datetime
 import pandas as pd
 
-from Syne_TestReportMapping import Syne_Date_Hours_Mapping, Resource_Task_TotalHour_mapping, get_AllDates_FromSyne
+from Syne_TestReportMapping import *
 
 
 def getWeekDay(SyneTimesheetDate):
@@ -15,17 +15,6 @@ def getWeekDay(SyneTimesheetDate):
     int_Year= int(dateSplit[2])
     weekday = datetime.date(day=int_day, month=int_month, year=int_Year).weekday()
     return weekdayToName[weekday]
-
-def Emp_count(str):
-    counts = dict()
-    words = str.split()
-    for word in words:
-        if word in counts:
-            counts[word] += 1
-        else:
-            counts[word] = 1
-    return counts
-
 
 def TSRunner():
     inputExcel1 ="C:\\Users\\aditi\\OneDrive\\Desktop\\Vishal_Syne\\Syne Jan Timesheet.xlsx"
@@ -48,31 +37,12 @@ def TSRunner():
     #get all unique employee Id's
     print(dfSyneExcel[TimesheetDetail].unique())
     print(dfSyneExcel[TimesheetDetail].count())
-    empId=""
-    empIdNameMapping = {}
-    for index, row in dfSyneExcel.iterrows():
-        if isinstance(row[0], int):
-            print(str(row[0])+" ---- "+row[1])
-            syneReportDetails = {}
-            syneReportDetails['ResourceName'] = row[1]
-            syneReportDetails['Project'] = row[2]
-            task = {}
-            taskType = {}
-            for i in range(3, len(dfSyneExcel)):
-                attendance = {}
-                if dfSyneExcel.loc[i][0]== row[0]:
-                    attendance['total'] = dfSyneExcel.loc[i][4]
-                    for day in range(5, TotalDays + 5):
-                        attendance[day - 4] = dfSyneExcel.loc[i][day]
-                    taskType[dfSyneExcel.loc[i][3]] = attendance
-                syneReportDetails['Task'] = taskType
-            empIdNameMapping[row[0]] = syneReportDetails
-    print(empIdNameMapping)
 
     outputData = [['', TimesheetDetail], [''], [''], headerRow, weakdayRow]
-    ListAllData = []
-    for empId, empDetails in empIdNameMapping.items():
-        l1=[]
+    #EmpIdNameMapping = EmpId_Name_Mapping
+    for empId in EmpId_Name_Mapping(inputExcel1):
+        l1 = []
+        empIdNameProjectMapping=EmpId_Name_Project_Mapping(inputExcel1, str(empId))
         EmpId_TaskHour = Resource_Task_TotalHour_mapping(inputExcel1, str(empId))
         noOfTask = EmpId_TaskHour[str(empId)].keys()
         getAllDates= get_AllDates_FromSyne(inputExcel1)
@@ -83,8 +53,8 @@ def TSRunner():
             if counter == 0:
                 l2.append('Syne')
                 l2.append(empId)
-                l2.append(empDetails['ResourceName'])
-                l2.append(empDetails['Project'])
+                l2.append(empIdNameProjectMapping[str(empId)]['ResourceName'])
+                l2.append(empIdNameProjectMapping[str(empId)]['Project'])
                 counter = counter + 1
             else:
                 l2.append('')

@@ -10,6 +10,16 @@ def EmpId_Name_Mapping(inputExcel):
             empIdNameMapping[str(row[0])]= str(row[1])
     return empIdNameMapping
 
+def EmpId_Name_Project_Mapping(inputExcel,EmpID):
+    dfSyneExcel = pd.read_excel(inputExcel, "new sheet")
+    empIdNameProjectMapping = {}
+    for i in range(1, len(dfSyneExcel)):
+        if (str(dfSyneExcel.values[i][0]) == EmpID):
+            resourceProject ={}
+            resourceProject['ResourceName'] = dfSyneExcel.values[i][1]
+            resourceProject['Project'] = dfSyneExcel.values[i][2]
+            empIdNameProjectMapping[EmpID] = resourceProject
+    return empIdNameProjectMapping
 
 def get_AllDates_FromSyne(inputExcel):
     dfSyneExcel = pd.read_excel(inputExcel, "new sheet")
@@ -52,13 +62,15 @@ def Syne_Date_Hours_Mapping(inputExcel, EmpID, Date):
 
 
 
-# inputExcel = "C:\\Users\\aditi\\OneDrive\\Desktop\\Vishal_Syne\\Syne Jan Timesheet.xlsx"
+inputExcel = "C:\\Users\\aditi\\OneDrive\\Desktop\\Vishal_Syne\\Syne Jan Timesheet.xlsx"
 # empId_NameMap = EmpId_Name_Mapping(inputExcel)
+# empIdNameProjectMapping = EmpId_Name_Project_Mapping(inputExcel,'321')
 # All_dates = get_AllDates_FromSyne(inputExcel)
 # EmpId_TaskHour = Resource_Task_TotalHour_mapping(inputExcel, '11')
 # Task_DateHour = Syne_Date_Hours_Mapping(inputExcel, '321', '06-JAN-2021')
 #
 # print(empId_NameMap)
+# print(empIdNameProjectMapping)
 # print(All_dates)
 # print(EmpId_TaskHour)
 # print(Task_DateHour)
