@@ -52,14 +52,14 @@ def Syne_Date_Hours_Mapping(inputExcel, EmpID, Date):
 
 
 
-inputExcel = "C:\\Users\\aditi\\OneDrive\\Desktop\\Vishal_Syne\\Syne Jan Timesheet.xlsx"
-empId_NameMap = EmpId_Name_Mapping(inputExcel)
-All_dates = get_AllDates_FromSyne(inputExcel)
-EmpId_TaskHour = Resource_Task_TotalHour_mapping(inputExcel, '11')
-Task_DateHour = Syne_Date_Hours_Mapping(inputExcel, '321', '06-JAN-2021')
-
-print(empId_NameMap)
-print(All_dates)
-print(EmpId_TaskHour)
-print(Task_DateHour)
+# inputExcel = "C:\\Users\\aditi\\OneDrive\\Desktop\\Vishal_Syne\\Syne Jan Timesheet.xlsx"
+# empId_NameMap = EmpId_Name_Mapping(inputExcel)
+# All_dates = get_AllDates_FromSyne(inputExcel)
+# EmpId_TaskHour = Resource_Task_TotalHour_mapping(inputExcel, '11')
+# Task_DateHour = Syne_Date_Hours_Mapping(inputExcel, '321', '06-JAN-2021')
+#
+# print(empId_NameMap)
+# print(All_dates)
+# print(EmpId_TaskHour)
+# print(Task_DateHour)
 
